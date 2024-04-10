@@ -1,7 +1,7 @@
 import { defineConfig } from '@playwright/test'
 
 export default defineConfig({
-  testDir: './tests/e2e',
+  testDir: './e2e-tests',
   webServer: {
     command: 'npm run start',
     url: 'http://127.0.0.1:8080',
