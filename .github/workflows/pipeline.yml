@@ -28,17 +28,16 @@ jobs:
         run: npm run test
       - name: e2e tests (playwright)
         run: npm run test:e2e
-      - name: Trigger deployment
+      - name: trigger deployment
         if: ${{ github.event_name == 'push' && !contains(join(github.event.commits.*.message, ', '), '#skip')}}
         run: curl https://api.render.com/deploy/srv-${{ secrets.RENDER_SERVICE_ID }}?key=${{ secrets.RENDER_API_KEY }}
-        discord_notify:
-      - name: Test Info
+      - name: discord notify info
         uses: rjstone/discord-webhook-notify@v1
         with:
           severity: info
           details: Test succeeded.
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
-      - name: Test Error
+      - name: discord notify error
         uses: rjstone/discord-webhook-notify@v1
         with:
           severity: error
@@ -52,7 +51,7 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v4
-      - name: Bump version and push tag
+      - name: bump version and push tag
         uses: anothrNick/github-tag-action@1.67.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
